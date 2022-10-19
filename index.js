@@ -6,7 +6,7 @@ const url = "https://interview.adpeai.com/api/v2/get-task";
 
 let data = ''
 
-const PORT = 3000;
+const PORT = process.env.port || 3000;
 
 const _options = {
     key: fs.readFileSync('localhost-key.pem'),
@@ -83,6 +83,8 @@ const getRequest = https.request(url, (response) => {
         }
 
         data = JSON.stringify(results)
+
+        console.log(data)
     
         // POST Request
         fetch('https://interview.adpeai.com/api/v2/submit-task', {
