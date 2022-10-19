@@ -22,22 +22,17 @@ https.createServer(_options, function (postRequest, res) {
 });
 
 // Get Request
-const getRequest = https.request(url, (response) => {
-    let temp = '';
-    let previousYear = new Date().getFullYear() - 1;
-    let employees = {}
-    let transactions = []
-    let _transactions = ''
-    let max = -Infinity;
+fetch(url)
+    .then(res => res.text())
+    .then(text => {
+        let temp = '';
+        let previousYear = new Date().getFullYear() - 1;
+        let employees = {}
+        let transactions = []
+        let _transactions = ''
+        let max = -Infinity;
 
-    console.log('GET Status Code:', response.statusCode);
-
-    response.on('data', (chunk) => {
-        data += chunk.toString();
-    });
-
-    response.on('end', () => {
-        temp = JSON.parse(data);
+        temp = JSON.parse(text);
 
         // Filters based on previous year
         temp.transactions.filter(obj => {
@@ -85,7 +80,7 @@ const getRequest = https.request(url, (response) => {
         data = JSON.stringify(results)
 
         console.log(data)
-    
+
         // POST Request
         fetch('https://interview.adpeai.com/api/v2/submit-task', {
             method: 'POST',
@@ -100,11 +95,4 @@ const getRequest = https.request(url, (response) => {
                 JSON.stringify(res)})
             .then(json => console.log(json))
             .catch (err => console.log(err, 'err'))
-
     });
-}).on("error", (err) => {
-    console.log("Error: ", err.message);
-});
-
-getRequest.end();
-
