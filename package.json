@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "http-server": "^14.1.1",
+    "https": "^1.0.0",
+    "node-fetch": "^2.6.1"
+  },
+  "scripts": {
+    "start": "HTTPS=true SSL_CRT_FILE=cert.pem SSL_KEY_FILE=key.pem node index.js"
+  }
+}
